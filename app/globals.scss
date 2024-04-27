@@ -88,111 +88,23 @@ a {
   text-decoration: none;
 }
 
-.nav {
-  display: flex;
-  padding: 0.75rem 1rem;
-  gap: 2rem;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  width: 100%;
-  z-index: 1;
-}
-
 .main {
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: center;
+  box-sizing: border-box;
   padding: 1rem;
   margin: 0 auto;
   height: calc(100% - 170px);
   max-width: var(--max-width);
 }
 
-.link {
-  padding: 1rem 1.2rem;
-  border-radius: var(--border-radius);
-  background: rgba(var(--card-rgb), 0);
-  border: 1px solid rgba(var(--card-border-rgb), 0);
-  transition: background 200ms, border 200ms;
-}
-
-.link span {
-  display: inline-block;
-  transition: transform 200ms;
-}
-
-.link p {
-  font-weight: 500;
-  margin: 0;
-  opacity: 0.8;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  max-width: 30ch;
-  text-wrap: balance;
-}
-
-.footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1.25rem 2rem;
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  z-index: 1;
-}
-
-.description {
-  font-size: 0.85rem;
-  font-family: var(--font-mono);
-}
-
-.description p {
-  margin: 0;
-  padding: 1rem;
-  background-color: rgba(var(--callout-rgb), 0.5);
-  border: 1px solid rgba(var(--callout-border-rgb), 0.3);
-  border-radius: var(--border-radius);
-
-  & a {
-    color: inherit;
-    text-decoration: underline;
-  }
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .link:hover {
-    background: rgba(var(--card-rgb), 0.1);
-    border: 1px solid rgba(var(--card-border-rgb), 0.15);
-  }
-
-  .link:hover span {
-    transform: translateX(4px);
-  }
-}
-
-@media (prefers-reduced-motion) {
-  .link:hover span {
-    transform: none;
-  }
-}
-
-/* Mobile */
-@media (max-width: 700px) {
-
-  .nav {
-    flex-direction: column;
-    max-width: 320px;
-  }
-
-  .link {
-    padding: 0.25rem 1rem;
-  }
-
-  .description {
-    font-size: 0.8rem;
-  }
+.title {
+  text-align: center;
+  font-weight: 600;
+  font-size: 3rem;
+  margin: 40px auto;
 }
 
 @keyframes rotate {
@@ -208,5 +120,12 @@ a {
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
+  }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .title {
+    font-size: 2rem;
   }
 }

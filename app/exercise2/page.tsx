@@ -1,13 +1,18 @@
-import { Range } from "@/_components/range/Range";
-import { pageTitles } from "@/_constants/constants";
+import { Range } from "@/components/range/Range";
+import { endpoints, pageTitles } from "@/constants/constants";
+import { getRangeValues } from "@/services/apiService";
 
-const Exercise = () => {
+const PageExercise2 = async () => {
+  const { data } = await getRangeValues(endpoints.fixedValues);
+  console.log(data);
+
   return (
     <>
       <h1 className="title">{pageTitles.exercise2}</h1>
       <Range />
+      <div>{data.fixedValues}</div>
     </>
   );
 };
 
-export default Exercise;
+export default PageExercise2;

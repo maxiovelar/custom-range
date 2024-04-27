@@ -1,0 +1,10 @@
+.wrong {
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 700px) {
+    .wrong {
+        width: 280px;
+        height: auto;
+    }
+}

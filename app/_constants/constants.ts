@@ -1,4 +1,4 @@
-import { type Page, type Link } from "../_types/types"
+import { type PageUrl, type Link } from "@/_types/types"
 
 export const links: Record<string, Link> = {
     home: {
@@ -23,7 +23,7 @@ export const links: Record<string, Link> = {
     },
 };
 
-export const pageTitles: Record<Page, string> = {
+export const pageTitles: Record<PageUrl, string> = {
     home: "Custom Ranges Exercise",
     exercise1: "Normal Range",
     exercise2: "Fixed Values Range",

@@ -1,5 +1,5 @@
-import { Range } from "../_components/range/range";
-import { pageTitles } from "../_constants/constants";
+import { Range } from "@/_components/range/Range";
+import { pageTitles } from "@/_constants/constants";
 
 const Exercise = () => {
   return (

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./banner.module.scss";
+import styles from "./Banner.module.scss";
 
 export const Banner = ({ ...props }: React.SVGProps<SVGSVGElement>) => {
   return (

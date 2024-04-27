@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
-import { links } from "../../_constants/constants";
-import styles from "./navbar.module.scss";
+import { links } from "@/_constants/constants";
+import styles from "./Navbar.module.scss";
 
 export const Navbar = () => {
   return (

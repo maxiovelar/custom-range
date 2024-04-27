@@ -12,18 +12,18 @@
 .description {
     font-size: 0.85rem;
     font-family: var(--font-mono);
-}
 
-.description p {
-    margin: 0;
-    padding: 1rem;
-    background-color: rgba(var(--callout-rgb), 0.5);
-    border: 1px solid rgba(var(--callout-border-rgb), 0.3);
-    border-radius: var(--border-radius);
+    & p {
+        margin: 0;
+        padding: 1rem;
+        background-color: rgba(var(--callout-rgb), 0.5);
+        border: 1px solid rgba(var(--callout-border-rgb), 0.3);
+        border-radius: var(--border-radius);
 
-    & a {
-        color: inherit;
-        text-decoration: underline;
+        & a {
+            color: inherit;
+            text-decoration: underline;
+        }
     }
 }
 
@@ -31,6 +31,6 @@
 @media (max-width: 700px) {
 
     .description {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
     }
 }

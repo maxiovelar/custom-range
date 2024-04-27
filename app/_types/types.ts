@@ -3,5 +3,5 @@ export interface Link {
     text: string;
 }
 
-export type Page = "home" | "exercise1" | "exercise2";
+export type PageUrl = "home" | "exercise1" | "exercise2";
 

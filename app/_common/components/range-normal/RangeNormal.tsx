@@ -7,6 +7,7 @@ import {
   dragoverHandler,
   dragstartHandler,
   dropHandler,
+  isValidValue,
   onChangeMaxValueHandler,
   onChangeMinValueHandler,
 } from "@/_infra/services/dragAndDropService";
@@ -33,12 +34,18 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
   const handleChangeMinValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(event.target.value);
     setInputMinValue(newValue);
+
+    if (!isValidValue(min, max, newValue)) setInputMinValue(min);
+
     onChangeMinValueHandler(min, max, minXPosition, maxXPosition, newValue);
   };
 
   const handleChangeMaxValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(event.target.value);
     setInputMaxValue(newValue);
+
+    if (!isValidValue(min, max, newValue)) setInputMaxValue(max);
+
     onChangeMaxValueHandler(min, max, minXPosition, maxXPosition, newValue);
   };
 
@@ -96,6 +103,7 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
         type="number"
         id={LITERALS.minValue}
         className="value"
+        // defaultValue={inputMinValue}
         value={inputMinValue}
         onChange={handleChangeMinValue}
         min={min}
@@ -118,6 +126,7 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
         type="number"
         id={LITERALS.maxValue}
         className="value"
+        // defaultValue={inputMaxValue}
         value={inputMaxValue}
         onChange={handleChangeMaxValue}
         min={min}

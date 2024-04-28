@@ -4,6 +4,7 @@ const LITERALS = {
     minSelector: "min-selector",
     maxSelector: "max-selector",
     dragging: "dragging",
+    range: "range",
 };
 
 interface DropHandlerProps {
@@ -72,21 +73,35 @@ const calculateNewPositionFromValue = (min: number, max: number, minXPosition: n
 }
 
 export const onChangeMinValueHandler = (min: number, max: number, minXPosition: number, maxXPosition: number, newValue: number) => {
-    if (!isValidValue(min, max, newValue)) return;
-    const newPosition = calculateNewPositionFromValue(min, max, minXPosition, maxXPosition, newValue)
     const minSelector = document.getElementById(LITERALS.minSelector);
+
+    if (!isValidValue(min, max, newValue)) {
+        (minSelector as HTMLElement).style.left = '0px';
+        return;
+    };
+
+    const newPosition = calculateNewPositionFromValue(min, max, minXPosition, maxXPosition, newValue);
     (minSelector as HTMLElement).style.left = `${newPosition}px`;
 }
 
 export const onChangeMaxValueHandler = (min: number, max: number, minXPosition: number, maxXPosition: number, newValue: number) => {
-    if (!isValidValue(min, max, newValue)) return;
-    const newPosition = calculateNewPositionFromValue(min, max, minXPosition, maxXPosition, newValue)
     const maxSelector = document.getElementById(LITERALS.maxSelector);
+
+    if (!isValidValue(min, max, newValue)) {
+        const range = document.getElementById(LITERALS.range);
+        const rangeXPosition = range?.getBoundingClientRect().x ?? 0;
+        const resetMaxXPosition = maxXPosition - rangeXPosition;
+
+        (maxSelector as HTMLElement).style.left = `${resetMaxXPosition}px`;
+        return;
+    };
+
+    const newPosition = calculateNewPositionFromValue(min, max, minXPosition, maxXPosition, newValue);
     (maxSelector as HTMLElement).style.left = `${newPosition}px`;
 }
 
-const isValidValue = (min: number, max: number, value: number) => {
-    return !isNaN(value) && value >= 0 && value >= min && value <= max;
+export const isValidValue = (min: number, max: number, value: number) => {
+    return !isNaN(value) && value > min && value <= max;
 }
 
 const hasText = (str: string) => {

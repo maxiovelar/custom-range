@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { links } from "@/constants/constants";
+import { links } from "@/_common/constants/constants";
 import styles from "./Navbar.module.scss";
 
 export const Navbar = () => {

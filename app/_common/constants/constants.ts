@@ -1,4 +1,4 @@
-import { type PageUrl, type Link, type RangeType } from "@/types/types"
+import { type PageUrl, type Link, type RangeType } from "@/_types/types"
 
 export const links: Record<string, Link> = {
     home: {
@@ -29,7 +29,7 @@ export const pageTitles: Record<PageUrl, string> = {
     exercise2: "Fixed Values Range",
 };
 
-export const endpoints: Record<RangeType, string> = {
-    normalRange: "ca276e65-744d-4dc8-82a1-ee073aaf987b",
+export const paths: Record<RangeType, string> = {
+    rangeNormal: "ca276e65-744d-4dc8-82a1-ee073aaf987b",
     fixedValues: "948df8dc-397c-4e6c-a7f6-f24f8b54fb7e",
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { links } from "@/constants/constants";
+import { links } from "@/_common/constants/constants";
 import styles from "./Footer.module.scss";
 
 export const Footer = () => {

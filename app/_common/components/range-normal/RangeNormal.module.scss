@@ -1,0 +1,55 @@
+.wrapper {
+    display: flex;
+    gap: 30px;
+}
+
+.value {
+    border-radius: 8px;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24rem;
+    height: 1.25rem;
+}
+
+.range {
+    position: absolute;
+    background-color: gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24rem;
+    height: 0.75rem;
+    border-radius: 1.5rem;
+}
+
+.min,
+.max {
+    position: absolute;
+    z-index: 2;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background-color: #e13d3d;
+
+    &:hover {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}
+
+.min {
+    left: 0;
+}
+
+.max {
+    right: 0;
+}
+
+.dragging {
+    background-color: green !important;
+}

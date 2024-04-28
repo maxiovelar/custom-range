@@ -5,7 +5,4 @@ export interface Link {
 
 export type PageUrl = "home" | "exercise1" | "exercise2";
 
-export type RangeType = "normalRange" | "fixedValues";
-
-
-
+export type RangeType = "rangeNormal" | "fixedValues";

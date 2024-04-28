@@ -1,18 +1,14 @@
-import { Range } from "@/components/range/Range";
-import { endpoints, pageTitles } from "@/constants/constants";
-import { getRangeValues } from "@/services/apiService";
+import { RangeNormal } from "@/_common/components/range-normal/RangeNormal";
+import { pageTitles } from "@/_common/constants/constants";
+import { getRangeNormalData } from "@/_infra/services/apiService";
 
 const PageExercise1 = async () => {
-  const { data } = await getRangeValues(endpoints.normalRange);
-  console.log(data);
+  const { min, max } = await getRangeNormalData();
 
   return (
     <>
       <h1 className="title">{pageTitles.exercise1}</h1>
-      <Range />
-      <div>
-        {data.min} {data.max}
-      </div>
+      <RangeNormal min={min} max={max} />
     </>
   );
 };

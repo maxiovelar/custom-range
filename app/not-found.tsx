@@ -1,4 +1,4 @@
-import { ImageNotFound } from "./components/not-found/ImageNotFound";
+import { ImageNotFound } from "./_common/components/not-found/ImageNotFound";
 export default function NotFound() {
   return (
     <>

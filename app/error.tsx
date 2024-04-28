@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { Wrong } from "./components/wrong/Wrong";
+import { Wrong } from "./_common/components/wrong/Wrong";
 
 export default function Error({
   error,

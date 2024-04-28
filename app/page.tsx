@@ -1,5 +1,5 @@
-import { Banner } from "@/components/banner/Banner";
-import { pageTitles } from "@/constants/constants";
+import { Banner } from "@/_common/components/banner/Banner";
+import { pageTitles } from "@/_common/constants/constants";
 
 export default function Home() {
   return (

@@ -30,12 +30,18 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
   const [inputMaxValue, setInputMaxValue] = useState<number>(max);
   const [minXPosition, setMinXPosition] = useState<number>(0);
   const [maxXPosition, setMaxXPosition] = useState<number>(0);
+  const [minError, setMinError] = useState(false);
+  const [maxError, setMaxError] = useState(false);
 
   const handleChangeMinValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(event.target.value);
     setInputMinValue(newValue);
 
-    if (!isValidValue(min, max, newValue)) setInputMinValue(min);
+    if (!isValidValue(min, max, newValue)) {
+      setMinError(true);
+    } else {
+      setMinError(false);
+    }
 
     onChangeMinValueHandler(min, max, minXPosition, maxXPosition, newValue);
   };
@@ -44,7 +50,11 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
     const newValue = Number(event.target.value);
     setInputMaxValue(newValue);
 
-    if (!isValidValue(min, max, newValue)) setInputMaxValue(max);
+    if (!isValidValue(min, max, newValue)) {
+      setMaxError(true);
+    } else {
+      setMaxError(false);
+    }
 
     onChangeMaxValueHandler(min, max, minXPosition, maxXPosition, newValue);
   };
@@ -102,36 +112,43 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
       <input
         type="number"
         id={LITERALS.minValue}
-        className="value"
-        // defaultValue={inputMinValue}
-        value={inputMinValue}
+        className={styles.value}
+        defaultValue={inputMinValue}
         onChange={handleChangeMinValue}
         min={min}
         max={max}
       />
       <div className={styles.container}>
         <div id={LITERALS.range} className={styles.range}></div>
-        <div
+        <button
+          type="button"
           id={LITERALS.minSelector}
-          draggable="true"
+          draggable={!minError}
           className={styles.min}
-        ></div>
-        <div
+          disabled={minError}
+        ></button>
+        <button
+          type="button"
           id={LITERALS.maxSelector}
-          draggable="true"
+          draggable={!maxError}
           className={styles.max}
-        ></div>
+          disabled={maxError}
+        ></button>
       </div>
       <input
         type="number"
         id={LITERALS.maxValue}
-        className="value"
-        // defaultValue={inputMaxValue}
-        value={inputMaxValue}
+        className={styles.value}
+        defaultValue={inputMaxValue}
         onChange={handleChangeMaxValue}
         min={min}
         max={max}
       />
+      {(minError || maxError) && (
+        <span className={styles.error}>
+          The values must be between {min} and {max}
+        </span>
+      )}
     </div>
   );
 };

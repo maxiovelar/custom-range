@@ -1,10 +1,15 @@
 .wrapper {
     display: flex;
     gap: 30px;
+    position: relative;
+    align-items: center;
 }
 
 .value {
     border-radius: 8px;
+    font-size: 1.5rem;
+    border: none;
+    padding: 0.5rem 0.75rem;
 }
 
 .container {
@@ -32,10 +37,19 @@
     z-index: 2;
     width: 1.75rem;
     height: 1.75rem;
+    border: none;
     border-radius: 50%;
-    background-color: #e13d3d;
+    background-color: rgb(var(--foreground-rgb));
+    transition: width 0.3s ease, height 0.3s ease;
+    -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
 
-    &:hover {
+    &:disabled {
+        background-color: gray;
+    }
+
+    &:not(:disabled):hover {
         width: 2.5rem;
         height: 2.5rem;
     }
@@ -51,4 +65,14 @@
 
 .dragging {
     background-color: green !important;
+}
+
+.error {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    position: absolute;
+    top: 3.25rem;
+    left: 50%;
+    transform: translate(-50%);
 }

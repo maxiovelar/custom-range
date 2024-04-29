@@ -40,7 +40,10 @@ export const dropHandler = ({ event, min, max, minXPosition, maxXPosition, onMin
     const dropPosition = event.pageX;
     const draggedItemPosition = dropPosition - rangePosition;
 
-    if (isValidMovement(dragItemId, dropPosition, minXPosition, maxXPosition)) {
+    const currentMinXPosition = document.getElementById(LITERALS.minSelector)?.getBoundingClientRect().x ?? 0;
+    const currentMaxXPosition = document.getElementById(LITERALS.maxSelector)?.getBoundingClientRect().x ?? 0;
+
+    if (isValidMovement(dragItemId, dropPosition, currentMinXPosition, currentMaxXPosition)) {
         (draggedItem as HTMLElement).style.left = `${draggedItemPosition}px`;
 
         const newValue = calculateNewValue(min, max, dropPosition, minXPosition, maxXPosition);
@@ -51,9 +54,9 @@ export const dropHandler = ({ event, min, max, minXPosition, maxXPosition, onMin
 }
 
 // functions
-const isValidMovement = (dragItemId: string, dropPosition: number, minXPosition: number, maxXPosition: number) => {
-    if (hasText(dragItemId) && dragItemId === LITERALS.minSelector && dropPosition > maxXPosition) return false;
-    if (hasText(dragItemId) && dragItemId === LITERALS.maxSelector && dropPosition < minXPosition) return false;
+const isValidMovement = (dragItemId: string, dropPosition: number, currentMinXPosition: number, currentMaxXPosition: number) => {
+    if (hasText(dragItemId) && dragItemId === LITERALS.minSelector && dropPosition > currentMaxXPosition) return false;
+    if (hasText(dragItemId) && dragItemId === LITERALS.maxSelector && dropPosition < currentMinXPosition) return false;
 
     return true;
 }
@@ -101,7 +104,7 @@ export const onChangeMaxValueHandler = (min: number, max: number, minXPosition: 
 }
 
 export const isValidValue = (min: number, max: number, value: number) => {
-    return !isNaN(value) && value > min && value <= max;
+    return !isNaN(value) && value >= min && value <= max;
 }
 
 const hasText = (str: string) => {

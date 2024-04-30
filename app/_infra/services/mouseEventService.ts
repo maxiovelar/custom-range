@@ -8,6 +8,7 @@ const onMouseMove = (event: MouseEvent, range: HTMLElement, mousePosition: numbe
     if (newSelectorPosition > rightEdge) newSelectorPosition = rightEdge;
 
     selector.style.left = `${newSelectorPosition}px`;
+    selector.style.cursor = 'grabbing';
 };
 
 
@@ -25,6 +26,7 @@ export const selectorMoveHandler = (selector: HTMLElement, range: HTMLElement) =
         const onMouseUp = () => {
             document.removeEventListener('mouseup', onMouseUp);
             document.removeEventListener('mousemove', handleMove);
+            selector.style.cursor = 'grab';
         };
 
         document.addEventListener('mousemove', handleMove);

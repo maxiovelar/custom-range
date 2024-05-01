@@ -2,7 +2,12 @@
 
 import React, { useEffect, useState } from 'react';
 import styles from './RangeNormal.module.scss';
-import { isValidValue, onChangeMaxValueHandler, selectorMoveHandler } from '@/_infra/services/mouseEventService';
+import {
+    hasText,
+    onChangeMaxValueHandler,
+    onChangeMinValueHandler,
+    selectorMoveHandler,
+} from '@/_infra/services/mouseEventService';
 
 const LITERALS = {
     minValue: 'min-value',
@@ -23,33 +28,18 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
     const [inputMaxValue, setInputMaxValue] = useState<number>(max);
     const [rangeStartPosition, setRangeStartPosition] = useState<number>(0);
     const [rangeEndPosition, setRangeEndPosition] = useState<number>(0);
-    const [minError, setMinError] = useState(false);
-    const [maxError, setMaxError] = useState(false);
+    const [error, setError] = useState('');
 
     const handleChangeMinValue = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = Number(event.target.value);
         setInputMinValue(newValue);
-
-        if (!isValidValue(min, max, newValue)) {
-            setMinError(true);
-        } else {
-            setMinError(false);
-        }
-
-        // onChangeMinValueHandler(min, max, minXPosition, maxXPosition, newValue);
+        onChangeMinValueHandler(min, max, rangeStartPosition, rangeEndPosition, newValue, setError);
     };
 
     const handleChangeMaxValue = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = Number(event.target.value);
         setInputMaxValue(newValue);
-
-        if (!isValidValue(min, max, newValue)) {
-            setMaxError(true);
-        } else {
-            setMaxError(false);
-        }
-
-        onChangeMaxValueHandler(min, max, rangeStartPosition, rangeEndPosition, newValue);
+        onChangeMaxValueHandler(min, max, rangeStartPosition, rangeEndPosition, newValue, setError);
     };
 
     useEffect(() => {
@@ -58,13 +48,16 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
         const range = document.getElementById(LITERALS.range) as HTMLElement;
 
         const rangeStartPosition = range.getBoundingClientRect().left;
-        const rangeEndPosition = range.offsetWidth - maxSelector.offsetWidth;
+        const rangeWidth = range.offsetWidth - maxSelector.offsetWidth;
+        const rangeEndPosition = rangeStartPosition + rangeWidth;
         setRangeStartPosition(rangeStartPosition);
         setRangeEndPosition(rangeEndPosition);
 
         selectorMoveHandler(minSelector, rangeStartPosition, rangeEndPosition);
         selectorMoveHandler(maxSelector, rangeStartPosition, rangeEndPosition);
     }, []);
+
+    const isError = hasText(error);
 
     return (
         <div className={styles.wrapper}>
@@ -84,16 +77,16 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
                 <button
                     type="button"
                     id={LITERALS.minSelector}
-                    draggable={!minError}
+                    draggable={!isError}
                     className={styles.min}
-                    disabled={minError}
+                    disabled={isError}
                 ></button>
                 <button
                     type="button"
                     id={LITERALS.maxSelector}
-                    draggable={!maxError}
+                    draggable={!isError}
                     className={styles.max}
-                    disabled={maxError}
+                    disabled={isError}
                 ></button>
             </div>
             <input
@@ -105,11 +98,7 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
                 min={min}
                 max={max}
             />
-            {(minError || maxError) && (
-                <span className={styles.error}>
-                    The values must be between {min} and {max}
-                </span>
-            )}
+            {isError && <span className={styles.error}>{error}</span>}
         </div>
     );
 };

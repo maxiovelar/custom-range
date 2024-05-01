@@ -7,10 +7,15 @@ const LITERALS = {
     progress: "progress",
 };
 
+const ERRORS = {
+    rangeValue: (min: number, max: number) => `The values must be between ${min} and ${max}`,
+    crossedValue: 'Min value and max value cannot be crossed in range',
+};
+
 const onMouseMove = (event: MouseEvent, rangeStartPosition: number, rangeEndPosition: number, mousePosition: number, selector: HTMLElement) => {
     let newSelectorPosition = event.clientX - mousePosition - rangeStartPosition;
-    if (newSelectorPosition < 0) newSelectorPosition = 0;
 
+    if (newSelectorPosition < 0) newSelectorPosition = 0;
     if (newSelectorPosition > rangeEndPosition) newSelectorPosition = rangeEndPosition;
 
     if (isValidMovement(selector, newSelectorPosition, rangeStartPosition)) {
@@ -47,20 +52,46 @@ export const selectorMoveHandler = (selector: HTMLElement, rangeStartPosition: n
     };
 };
 
-export const onChangeMaxValueHandler = (min: number, max: number, rangeStartPosition: number, rangeEndPosition: number, newValue: number) => {
-    const maxSelector = document.getElementById(LITERALS.maxSelector);
+export const onChangeMinValueHandler = (min: number, max: number, rangeStartPosition: number, rangeEndPosition: number, newValue: number, setError: (error: string) => void) => {
+    const minSelector = document.getElementById(LITERALS.minSelector) as HTMLElement;
+    const newPosition = calculateNewPositionFromValue(min, max, rangeStartPosition, rangeEndPosition, newValue);
 
     if (!isValidValue(min, max, newValue)) {
-        console.log('RANGE START POSITION:', rangeStartPosition);
-        console.log('RANGE END POSITION:', rangeEndPosition);
-        (maxSelector as HTMLElement).style.left = `${rangeEndPosition}px`;
+        (minSelector as HTMLElement).style.left = '0px';
+        setError(ERRORS.rangeValue(min, max));
         return;
     };
 
-    const newPosition = calculateNewPositionFromValue(min, max, rangeStartPosition, rangeEndPosition, newValue);
-    (maxSelector as HTMLElement).style.left = `${newPosition}px`;
+    if (!isValidMovement(minSelector, newPosition, rangeStartPosition)) {
+        (minSelector as HTMLElement).style.left = '0px';
+        setError(ERRORS.crossedValue);
+        return;
+    }
 
-    console.log('NEW POSITION:', newPosition)
+    setError('');
+
+    (minSelector as HTMLElement).style.left = `${newPosition}px`;
+}
+
+export const onChangeMaxValueHandler = (min: number, max: number, rangeStartPosition: number, rangeEndPosition: number, newValue: number, setError: (error: string) => void) => {
+    const maxSelector = document.getElementById(LITERALS.maxSelector) as HTMLElement;
+    const newPosition = calculateNewPositionFromValue(min, max, rangeStartPosition, rangeEndPosition, newValue);
+
+    if (!isValidValue(min, max, newValue)) {
+        (maxSelector as HTMLElement).style.left = `${rangeEndPosition - rangeStartPosition}px`;
+        setError(ERRORS.rangeValue(min, max));
+        return;
+    };
+
+    if (!isValidMovement(maxSelector, newPosition, rangeStartPosition)) {
+        (maxSelector as HTMLElement).style.left = `${rangeEndPosition - rangeStartPosition}px`;
+        setError(ERRORS.crossedValue);
+        return;
+    }
+
+    setError('');
+
+    (maxSelector as HTMLElement).style.left = `${newPosition}px`;
 }
 
 
@@ -73,12 +104,12 @@ const calculateNewPositionFromValue = (min: number, max: number, rangeStartPosit
 
 
 // functions
-export const isValidMovement = (selector: HTMLElement, newSelectorPosition: number, rangePosition: number) => {
+export const isValidMovement = (selector: HTMLElement, newSelectorPosition: number, rangeStartPosition: number) => {
     const minSelector = document.getElementById(LITERALS.minSelector) as HTMLElement;
     const maxSelector = document.getElementById(LITERALS.maxSelector) as HTMLElement;
 
-    const currentMinXPosition = (minSelector.getBoundingClientRect().left - rangePosition);
-    const currentMaxXPosition = (maxSelector.getBoundingClientRect().left - rangePosition);
+    const currentMinXPosition = (minSelector.getBoundingClientRect().left - rangeStartPosition);
+    const currentMaxXPosition = (maxSelector.getBoundingClientRect().left - rangeStartPosition);
 
     if (selector.id === LITERALS.minSelector && newSelectorPosition >= currentMaxXPosition) return false;
     if (selector.id === LITERALS.maxSelector && newSelectorPosition <= currentMinXPosition) return false;
@@ -111,4 +142,6 @@ export const setProgressWidth = (selectorId: string) => {
     }
 }
 
-
+export const hasText = (str: string) => {
+    return typeof str === 'string' && str !== undefined && str !== '';
+}

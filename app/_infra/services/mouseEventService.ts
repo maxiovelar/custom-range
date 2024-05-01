@@ -23,7 +23,7 @@ const onMouseMove = (event: MouseEvent, rangeStartPosition: number, rangeEndPosi
     if (isValidMovement(selector, newSelectorPosition, rangeStartPosition)) {
         selector.style.left = `${newSelectorPosition}px`;
         selector.style.cursor = 'grabbing';
-        setProgressWidth(selector.id);
+        setProgressWidth();
 
         const newValue = calculateNewValueFromPosition(newSelectorPosition, rangeStartPosition, rangeEndPosition, min, max);
 
@@ -71,14 +71,14 @@ export const onChangeMinValueHandler = (min: number, max: number, rangeStartPosi
 
     if (!isValidValue(min, max, newValue)) {
         (minSelector as HTMLElement).style.left = '0px';
-        setProgressWidth(minSelector.id);
+        setProgressWidth();
         setError(ERRORS.rangeValue(min, max));
         return;
     };
 
     if (isValueCrossed(LITERALS.minValue, newValue)) {
         (minSelector as HTMLElement).style.left = '0px';
-        setProgressWidth(minSelector.id);
+        setProgressWidth();
         setError(ERRORS.crossedValue);
         return;
     }
@@ -86,7 +86,7 @@ export const onChangeMinValueHandler = (min: number, max: number, rangeStartPosi
     setError('');
 
     (minSelector as HTMLElement).style.left = `${newPosition}px`;
-    setProgressWidth(minSelector.id);
+    setProgressWidth();
 }
 
 export const onChangeMaxValueHandler = (min: number, max: number, rangeStartPosition: number, rangeEndPosition: number, newValue: number, setError: (error: string) => void) => {
@@ -95,14 +95,14 @@ export const onChangeMaxValueHandler = (min: number, max: number, rangeStartPosi
 
     if (!isValidValue(min, max, newValue)) {
         (maxSelector as HTMLElement).style.left = `${rangeEndPosition - rangeStartPosition}px`;
-        setProgressWidth(maxSelector.id);
+        setProgressWidth();
         setError(ERRORS.rangeValue(min, max));
         return;
     };
 
     if (isValueCrossed(LITERALS.maxValue, newValue)) {
         (maxSelector as HTMLElement).style.left = `${rangeEndPosition - rangeStartPosition}px`;
-        setProgressWidth(maxSelector.id);
+        setProgressWidth();
         setError(ERRORS.crossedValue);
         return;
     }
@@ -110,10 +110,10 @@ export const onChangeMaxValueHandler = (min: number, max: number, rangeStartPosi
     setError('');
 
     (maxSelector as HTMLElement).style.left = `${newPosition}px`;
-    setProgressWidth(maxSelector.id);
+    setProgressWidth();
 }
 
-export const setProgressWidth = (selectorId: string) => {
+export const setProgressWidth = () => {
     const minSelector = document.getElementById(LITERALS.minSelector) as HTMLElement;
     const maxSelector = document.getElementById(LITERALS.maxSelector) as HTMLElement;
     const selectorRadius = minSelector.offsetWidth / 2;
@@ -125,14 +125,7 @@ export const setProgressWidth = (selectorId: string) => {
 
     const progressWidth = maxSelectorPosition - minSelectorPosition;
     progress.style.width = `${progressWidth}px`;
-
-    if (selectorId === LITERALS.minSelector) {
-        progress.style.marginLeft = `${maxSelectorPosition - rangePosition - progressWidth + selectorRadius}px`;
-    };
-
-    if (selectorId === LITERALS.maxSelector) {
-        progress.style.marginRight = `${minSelectorPosition - rangePosition - progressWidth + selectorRadius}px`;
-    }
+    progress.style.marginLeft = `${minSelectorPosition - rangePosition + selectorRadius}px`;
 }
 
 const calculateNewPositionFromValue = (min: number, max: number, rangeStartPosition: number, rangeEndPosition: number, newInsertedValue: number) => {

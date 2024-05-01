@@ -68,11 +68,11 @@ $selector-height: 1.75rem;
 }
 
 .min {
-    left: calc(0% - #{$selector-width} / 2);
+    left: 0;
 }
 
 .max {
-    right: calc(0% - #{$selector-width} / 2);
+    right: 0;
 }
 
 .label {

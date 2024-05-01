@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const { NEXT_PUBLIC_API_BASE_URL } = process.env;
+const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const httpClient = {
 
     get: async (path: string) => {
-        const res = await axios.get(NEXT_PUBLIC_API_BASE_URL + path);
+        const res = await axios.get(baseUrl + path);
         if (res.status !== 200) {
             throw new Error("Failed to fetch data");
         }

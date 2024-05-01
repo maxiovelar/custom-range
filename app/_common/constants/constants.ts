@@ -23,6 +23,16 @@ export const links: Record<string, Link> = {
     },
 };
 
+export const LITERALS = {
+    minValue: 'min-value',
+    maxValue: 'max-value',
+    minSelector: 'min-selector',
+    maxSelector: 'max-selector',
+    range: 'range',
+    progress: 'progress',
+    currency: '€',
+};
+
 export const pageTitles: Record<PageUrl, string> = {
     home: "Custom Ranges Exercise",
     exercise1: "Normal Range",

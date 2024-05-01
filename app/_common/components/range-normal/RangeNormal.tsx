@@ -2,16 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import styles from './RangeNormal.module.scss';
-import {
-    dragendHandler,
-    dragoverHandler,
-    dragstartHandler,
-    dropHandler,
-    isValidValue,
-    onChangeMaxValueHandler,
-    onChangeMinValueHandler,
-} from '@/_infra/services/dragAndDropService';
-import { selectorMoveHandler } from '@/_infra/services/mouseEventService';
+import { isValidValue, onChangeMaxValueHandler, selectorMoveHandler } from '@/_infra/services/mouseEventService';
 
 const LITERALS = {
     minValue: 'min-value',
@@ -19,6 +10,7 @@ const LITERALS = {
     minSelector: 'min-selector',
     maxSelector: 'max-selector',
     range: 'range',
+    progress: 'progress',
 };
 
 export interface RangeNormalProps {
@@ -29,8 +21,8 @@ export interface RangeNormalProps {
 export const RangeNormal = ({ min, max }: RangeNormalProps) => {
     const [inputMinValue, setInputMinValue] = useState<number>(min);
     const [inputMaxValue, setInputMaxValue] = useState<number>(max);
-    const [minXPosition, setMinXPosition] = useState<number>(0);
-    const [maxXPosition, setMaxXPosition] = useState<number>(0);
+    const [rangeStartPosition, setRangeStartPosition] = useState<number>(0);
+    const [rangeEndPosition, setRangeEndPosition] = useState<number>(0);
     const [minError, setMinError] = useState(false);
     const [maxError, setMaxError] = useState(false);
 
@@ -44,7 +36,7 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
             setMinError(false);
         }
 
-        onChangeMinValueHandler(min, max, minXPosition, maxXPosition, newValue);
+        // onChangeMinValueHandler(min, max, minXPosition, maxXPosition, newValue);
     };
 
     const handleChangeMaxValue = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +49,7 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
             setMaxError(false);
         }
 
-        onChangeMaxValueHandler(min, max, minXPosition, maxXPosition, newValue);
+        onChangeMaxValueHandler(min, max, rangeStartPosition, rangeEndPosition, newValue);
     };
 
     useEffect(() => {
@@ -65,8 +57,13 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
         const maxSelector = document.getElementById(LITERALS.maxSelector) as HTMLElement;
         const range = document.getElementById(LITERALS.range) as HTMLElement;
 
-        selectorMoveHandler(minSelector, range);
-        selectorMoveHandler(maxSelector, range);
+        const rangeStartPosition = range.getBoundingClientRect().left;
+        const rangeEndPosition = range.offsetWidth - maxSelector.offsetWidth;
+        setRangeStartPosition(rangeStartPosition);
+        setRangeEndPosition(rangeEndPosition);
+
+        selectorMoveHandler(minSelector, rangeStartPosition, rangeEndPosition);
+        selectorMoveHandler(maxSelector, rangeStartPosition, rangeEndPosition);
     }, []);
 
     return (
@@ -81,7 +78,9 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
                 max={max}
             />
             <div className={styles.container}>
-                <div id={LITERALS.range} className={styles.range}></div>
+                <div id={LITERALS.range} className={styles.range}>
+                    <div id={LITERALS.progress} className={styles.progress}></div>
+                </div>
                 <button
                     type="button"
                     id={LITERALS.minSelector}

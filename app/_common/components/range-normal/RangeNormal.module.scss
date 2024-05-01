@@ -1,3 +1,6 @@
+$selector-width: 1.75rem;
+$selector-height: 1.75rem;
+
 .wrapper {
     display: flex;
     gap: 30px;
@@ -43,8 +46,8 @@
 .max {
     position: absolute;
     z-index: 2;
-    width: 1.75rem;
-    height: 1.75rem;
+    width: $selector-width;
+    height: $selector-height;
     border: none;
     border-radius: 50%;
     background-color: rgb(var(--foreground-rgb));
@@ -55,7 +58,8 @@
     cursor: grab;
 
     &:disabled {
-        background-color: gray;
+        cursor: default;
+        background-color: rgb(var(--gray-rgb));
     }
 
     &:not(:disabled):hover {
@@ -64,11 +68,11 @@
 }
 
 .min {
-    left: 0;
+    left: calc(0% - #{$selector-width} / 2);
 }
 
 .max {
-    right: 0;
+    right: calc(0% - #{$selector-width} / 2);
 }
 
 .label {

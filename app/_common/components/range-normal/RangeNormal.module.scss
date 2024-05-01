@@ -47,9 +47,9 @@
     border-radius: 50%;
     background-color: rgb(var(--foreground-rgb));
     transition: transform 0.3s ease;
-    -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.75);
     cursor: grab;
 
     &:disabled {
@@ -77,4 +77,14 @@
     top: 3.25rem;
     left: 50%;
     transform: translate(-50%);
+}
+
+@media (prefers-color-scheme: dark) {
+
+    .min,
+    .max {
+        -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    }
 }

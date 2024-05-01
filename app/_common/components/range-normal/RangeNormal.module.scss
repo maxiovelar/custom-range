@@ -24,6 +24,7 @@
 .range {
     position: absolute;
     background-color: gray;
+    background-color: rgb(var(--background-start-rgb));
     display: flex;
     align-items: center;
     width: 32rem;
@@ -34,7 +35,8 @@
 .progress {
     height: 100%;
     width: 100%;
-    background-color: green;
+    background-color: rgb(var(--gray-rgb));
+    border-radius: 1.5rem;
 }
 
 .min,
@@ -67,6 +69,11 @@
 
 .max {
     right: 0;
+}
+
+.label {
+    font-size: 1.5rem;
+    margin-left: 0.5rem;
 }
 
 .error {

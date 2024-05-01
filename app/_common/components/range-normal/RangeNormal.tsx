@@ -16,6 +16,7 @@ const LITERALS = {
     maxSelector: 'max-selector',
     range: 'range',
     progress: 'progress',
+    currency: '€',
 };
 
 export interface RangeNormalProps {
@@ -53,23 +54,44 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
         setRangeStartPosition(rangeStartPosition);
         setRangeEndPosition(rangeEndPosition);
 
-        selectorMoveHandler(minSelector, rangeStartPosition, rangeEndPosition);
-        selectorMoveHandler(maxSelector, rangeStartPosition, rangeEndPosition);
+        selectorMoveHandler(
+            minSelector,
+            rangeStartPosition,
+            rangeEndPosition,
+            min,
+            max,
+            setInputMinValue,
+            setInputMaxValue
+        );
+        selectorMoveHandler(
+            maxSelector,
+            rangeStartPosition,
+            rangeEndPosition,
+            min,
+            max,
+            setInputMinValue,
+            setInputMaxValue
+        );
     }, []);
 
     const isError = hasText(error);
 
     return (
         <div className={styles.wrapper}>
-            <input
-                type="number"
-                id={LITERALS.minValue}
-                className={styles.value}
-                defaultValue={inputMinValue}
-                onChange={handleChangeMinValue}
-                min={min}
-                max={max}
-            />
+            <div>
+                <input
+                    type="number"
+                    id={LITERALS.minValue}
+                    className={styles.value}
+                    defaultValue={inputMinValue}
+                    onChange={handleChangeMinValue}
+                    min={min}
+                    max={max}
+                />
+                <label htmlFor={LITERALS.minValue} className={styles.label}>
+                    {LITERALS.currency}
+                </label>
+            </div>
             <div className={styles.container}>
                 <div id={LITERALS.range} className={styles.range}>
                     <div id={LITERALS.progress} className={styles.progress}></div>
@@ -89,15 +111,20 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
                     disabled={isError}
                 ></button>
             </div>
-            <input
-                type="number"
-                id={LITERALS.maxValue}
-                className={styles.value}
-                defaultValue={inputMaxValue}
-                onChange={handleChangeMaxValue}
-                min={min}
-                max={max}
-            />
+            <div>
+                <input
+                    type="number"
+                    id={LITERALS.maxValue}
+                    className={styles.value}
+                    defaultValue={inputMaxValue}
+                    onChange={handleChangeMaxValue}
+                    min={min}
+                    max={max}
+                />
+                <label htmlFor={LITERALS.maxValue} className={styles.label}>
+                    {LITERALS.currency}
+                </label>
+            </div>
             {isError && <span className={styles.error}>{error}</span>}
         </div>
     );

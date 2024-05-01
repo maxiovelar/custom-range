@@ -1,3 +1,11 @@
+const LITERALS = {
+    minValue: "min-value",
+    maxValue: "max-value",
+    minSelector: "min-selector",
+    maxSelector: "max-selector",
+    range: "range",
+};
+
 const onMouseMove = (event: MouseEvent, range: HTMLElement, mousePosition: number, selector: HTMLElement) => {
     const rangePosition = range.getBoundingClientRect().left;
 
@@ -7,8 +15,10 @@ const onMouseMove = (event: MouseEvent, range: HTMLElement, mousePosition: numbe
     const rightEdge = range.offsetWidth - selector.offsetWidth;
     if (newSelectorPosition > rightEdge) newSelectorPosition = rightEdge;
 
-    selector.style.left = `${newSelectorPosition}px`;
-    selector.style.cursor = 'grabbing';
+    if (isValidMovement(selector, newSelectorPosition, rangePosition)) {
+        selector.style.left = `${newSelectorPosition}px`;
+        selector.style.cursor = 'grabbing';
+    }
 };
 
 
@@ -37,3 +47,19 @@ export const selectorMoveHandler = (selector: HTMLElement, range: HTMLElement) =
         return false;
     };
 };
+
+
+// functions
+const isValidMovement = (selector: HTMLElement, newSelectorPosition: number, rangePosition: number) => {
+    const minSelector = document.getElementById(LITERALS.minSelector) as HTMLElement;
+    const maxSelector = document.getElementById(LITERALS.maxSelector) as HTMLElement;
+
+    const currentMinXPosition = (minSelector.getBoundingClientRect().left - rangePosition);
+    const currentMaxXPosition = (maxSelector.getBoundingClientRect().left - rangePosition);
+
+    if (selector.id === LITERALS.minSelector && newSelectorPosition >= currentMaxXPosition) return false;
+    if (selector.id === LITERALS.maxSelector && newSelectorPosition <= currentMinXPosition) return false;
+
+    return true;
+}
+

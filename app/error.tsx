@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import { Wrong } from "./_common/components/wrong/Wrong";
+import { useEffect } from 'react';
+import { Wrong } from './_common/components/svg/wrong/Wrong';
 
 export default function Error({
-  error,
-  reset,
+    error,
+    reset,
 }: {
-  readonly error: Error & { digest?: string };
-  readonly reset: () => void;
+    readonly error: Error & { digest?: string };
+    readonly reset: () => void;
 }) {
-  useEffect(() => {
-    console.error(error);
-  }, [error]);
+    useEffect(() => {
+        console.error(error);
+    }, [error]);
 
-  return (
-    <>
-      <Wrong />
-      <h2>Something went wrong!</h2>
-      <button className="flat-button" onClick={() => reset()}>
-        Try again
-      </button>
-    </>
-  );
+    return (
+        <>
+            <Wrong />
+            <h2>Something went wrong!</h2>
+            <button className="flat-button" onClick={() => reset()}>
+                Try again
+            </button>
+        </>
+    );
 }

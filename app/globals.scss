@@ -119,6 +119,25 @@ a {
   text-align: center;
 }
 
+.text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  max-width: 800px;
+
+  & h2 {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
+  & p {
+    font-size: 1.25rem;
+  }
+}
+
 .flat-button {
   padding: 0.75rem 1rem;
   margin: 1rem auto;

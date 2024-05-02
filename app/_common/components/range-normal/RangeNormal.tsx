@@ -19,6 +19,8 @@ export interface RangeNormalProps {
 export const RangeNormal = ({ min, max }: RangeNormalProps) => {
     const [inputMinValue, setInputMinValue] = useState(min);
     const [inputMaxValue, setInputMaxValue] = useState(max);
+    const [error, setError] = useState('');
+    const isError = hasText(error);
 
     useEffect(() => {
         const minSelector = document.getElementById(LITERALS.minSelector) as HTMLElement;
@@ -37,8 +39,6 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const [error, setError] = useState('');
-
     const handleChangeMinValue = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = Number(event.target.value);
         setInputMinValue(newValue);
@@ -50,8 +50,6 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
         setInputMaxValue(newValue);
         onChangeMaxValueHandler(newValue, setError);
     };
-
-    const isError = hasText(error);
 
     return (
         <div className={styles.wrapper}>

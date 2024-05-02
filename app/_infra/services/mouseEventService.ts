@@ -1,21 +1,20 @@
-const LITERALS = {
-    minValue: "min-value",
-    maxValue: "max-value",
-    minSelector: "min-selector",
-    maxSelector: "max-selector",
-    range: "range",
-    progress: "progress",
-};
+import { LITERALS } from "@/_common/constants/constants";
+import { getState } from "@/store";
 
 const ERRORS = {
     rangeValue: (min: number, max: number) => `The values must be between ${min} and ${max}`,
     crossedValue: 'Min value and max value cannot be crossed in range',
 };
 
-const onMouseMove = (event: MouseEvent, rangeStartPosition: number, rangeEndPosition: number, mousePosition: number, selector: HTMLElement, min: number, max: number, setInputMinValue: (newValue: number) => void, setInputMaxValue: (newValue: number) => void) => {
+interface MouseMoveProps {
+    event: MouseEvent, mousePosition: number, selector: HTMLElement, onInputChange: (newValue: number) => void
+}
+
+const onMouseMove = ({ event, mousePosition, selector, onInputChange }: MouseMoveProps) => {
+    const { min, max, rangeStartPosition, rangeEndPosition } = getState();
+
     const selectorPosition = event.clientX - mousePosition - rangeStartPosition;
     let newSelectorPosition = Math.round(selectorPosition);
-    console.log('newSelectorPosition', newSelectorPosition);
 
     if (newSelectorPosition < 0) newSelectorPosition = 0;
     if (newSelectorPosition > (rangeEndPosition - rangeStartPosition)) newSelectorPosition = (rangeEndPosition - rangeStartPosition);
@@ -25,21 +24,21 @@ const onMouseMove = (event: MouseEvent, rangeStartPosition: number, rangeEndPosi
         selector.style.cursor = 'grabbing';
         setProgressWidth();
 
-        const newValue = calculateNewValueFromPosition(newSelectorPosition, rangeStartPosition, rangeEndPosition, min, max);
+        const newValue = calculateNewValueFromPosition(newSelectorPosition, min, max);
 
 
         if (selector.id === LITERALS.minSelector) {
-            setInputMinValue(newValue);
+            onInputChange(newValue);
         }
 
         if (selector.id === LITERALS.maxSelector) {
-            setInputMaxValue(newValue);
+            onInputChange(newValue);
         }
     }
 };
 
 
-export const selectorMoveHandler = (selector: HTMLElement, rangeStartPosition: number, rangeEndPosition: number, min: number, max: number, setInputMinValue: (newValue: number) => void, setInputMaxValue: (newValue: number) => void) => {
+export const selectorMoveHandler = (selector: HTMLElement, onInputChange: (newValue: number) => void) => {
     selector.onmousedown = (event: MouseEvent) => {
         event.preventDefault();
 
@@ -47,7 +46,7 @@ export const selectorMoveHandler = (selector: HTMLElement, rangeStartPosition: n
         const mousePosition = event.clientX - selectorPosition;
 
         const handleMove = (event: MouseEvent) => {
-            onMouseMove(event, rangeStartPosition, rangeEndPosition, mousePosition, selector, min, max, setInputMinValue, setInputMaxValue);
+            onMouseMove({ event, mousePosition, selector, onInputChange });
         }
 
         const onMouseUp = () => {
@@ -65,19 +64,20 @@ export const selectorMoveHandler = (selector: HTMLElement, rangeStartPosition: n
     };
 };
 
-export const onChangeMinValueHandler = (min: number, max: number, rangeStartPosition: number, rangeEndPosition: number, newValue: number, setError: (error: string) => void) => {
+export const onChangeMinValueHandler = (newValue: number, setError: (error: string) => void) => {
+    const { min, max } = getState();
     const minSelector = document.getElementById(LITERALS.minSelector) as HTMLElement;
-    const newPosition = calculateNewPositionFromValue(min, max, rangeStartPosition, rangeEndPosition, newValue);
+    const newPosition = calculateNewPositionFromValue(newValue);
 
     if (!isValidValue(min, max, newValue)) {
-        (minSelector as HTMLElement).style.left = '0px';
+        (minSelector).style.left = '0px';
         setProgressWidth();
         setError(ERRORS.rangeValue(min, max));
         return;
     };
 
     if (isValueCrossed(LITERALS.minValue, newValue)) {
-        (minSelector as HTMLElement).style.left = '0px';
+        (minSelector).style.left = '0px';
         setProgressWidth();
         setError(ERRORS.crossedValue);
         return;
@@ -85,23 +85,24 @@ export const onChangeMinValueHandler = (min: number, max: number, rangeStartPosi
 
     setError('');
 
-    (minSelector as HTMLElement).style.left = `${newPosition}px`;
+    (minSelector).style.left = `${newPosition}px`;
     setProgressWidth();
 }
 
-export const onChangeMaxValueHandler = (min: number, max: number, rangeStartPosition: number, rangeEndPosition: number, newValue: number, setError: (error: string) => void) => {
+export const onChangeMaxValueHandler = (newValue: number, setError: (error: string) => void) => {
+    const { min, max, rangeStartPosition, rangeEndPosition } = getState();
     const maxSelector = document.getElementById(LITERALS.maxSelector) as HTMLElement;
-    const newPosition = calculateNewPositionFromValue(min, max, rangeStartPosition, rangeEndPosition, newValue);
+    const newPosition = calculateNewPositionFromValue(newValue);
 
     if (!isValidValue(min, max, newValue)) {
-        (maxSelector as HTMLElement).style.left = `${rangeEndPosition - rangeStartPosition}px`;
+        (maxSelector).style.left = `${rangeEndPosition - rangeStartPosition}px`;
         setProgressWidth();
         setError(ERRORS.rangeValue(min, max));
         return;
     };
 
     if (isValueCrossed(LITERALS.maxValue, newValue)) {
-        (maxSelector as HTMLElement).style.left = `${rangeEndPosition - rangeStartPosition}px`;
+        (maxSelector).style.left = `${rangeEndPosition - rangeStartPosition}px`;
         setProgressWidth();
         setError(ERRORS.crossedValue);
         return;
@@ -109,8 +110,23 @@ export const onChangeMaxValueHandler = (min: number, max: number, rangeStartPosi
 
     setError('');
 
-    (maxSelector as HTMLElement).style.left = `${newPosition}px`;
+    (maxSelector).style.left = `${newPosition}px`;
     setProgressWidth();
+}
+
+const calculateNewPositionFromValue = (newInsertedValue: number) => {
+    const { min, max, rangeStartPosition, rangeEndPosition } = getState();
+
+    const valueVariationPercentage = (newInsertedValue * 100) / (max - min);
+    const newPosition = ((rangeEndPosition - rangeStartPosition) * valueVariationPercentage) / 100;
+    return Math.round(newPosition);
+}
+
+const calculateNewValueFromPosition = (newPosition: number, min: number, max: number) => {
+    const { rangeStartPosition, rangeEndPosition } = getState();
+    const positionVariationPercentage = ((newPosition) * 100) / (rangeEndPosition - rangeStartPosition);
+    const newValue = ((max - min) * positionVariationPercentage) / 100;
+    return Math.round(newValue + min);
 }
 
 export const setProgressWidth = () => {
@@ -126,18 +142,6 @@ export const setProgressWidth = () => {
     const progressWidth = maxSelectorPosition - minSelectorPosition;
     progress.style.width = `${progressWidth}px`;
     progress.style.marginLeft = `${minSelectorPosition - rangePosition + selectorRadius}px`;
-}
-
-const calculateNewPositionFromValue = (min: number, max: number, rangeStartPosition: number, rangeEndPosition: number, newInsertedValue: number) => {
-    const valueVariationPercentage = (newInsertedValue * 100) / (max - min);
-    const newPosition = ((rangeEndPosition - rangeStartPosition) * valueVariationPercentage) / 100;
-    return Math.round(newPosition);
-}
-
-const calculateNewValueFromPosition = (newPosition: number, rangeStartPosition: number, rangeEndPosition: number, min: number, max: number) => {
-    const positionVariationPercentage = ((newPosition) * 100) / (rangeEndPosition - rangeStartPosition);
-    const newValue = ((max - min) * positionVariationPercentage) / 100;
-    return Math.round(newValue + min);
 }
 
 // functions

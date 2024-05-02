@@ -3,21 +3,13 @@
 import React, { useEffect, useState } from 'react';
 import styles from './RangeNormal.module.scss';
 import {
-    hasText,
     onChangeMaxValueHandler,
     onChangeMinValueHandler,
+    hasText,
     selectorMoveHandler,
 } from '@/_infra/services/mouseEventService';
-
-const LITERALS = {
-    minValue: 'min-value',
-    maxValue: 'max-value',
-    minSelector: 'min-selector',
-    maxSelector: 'max-selector',
-    range: 'range',
-    progress: 'progress',
-    currency: '€',
-};
+import { LITERALS } from '@/_common/constants/constants';
+import { setState } from '@/store';
 
 export interface RangeNormalProps {
     min: number;
@@ -25,54 +17,39 @@ export interface RangeNormalProps {
 }
 
 export const RangeNormal = ({ min, max }: RangeNormalProps) => {
-    const [inputMinValue, setInputMinValue] = useState<number>(min);
-    const [inputMaxValue, setInputMaxValue] = useState<number>(max);
-    const [rangeStartPosition, setRangeStartPosition] = useState<number>(0);
-    const [rangeEndPosition, setRangeEndPosition] = useState<number>(0);
-    const [error, setError] = useState('');
-
-    const handleChangeMinValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = Number(event.target.value);
-        setInputMinValue(newValue);
-        onChangeMinValueHandler(min, max, rangeStartPosition, rangeEndPosition, newValue, setError);
-    };
-
-    const handleChangeMaxValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = Number(event.target.value);
-        setInputMaxValue(newValue);
-        onChangeMaxValueHandler(min, max, rangeStartPosition, rangeEndPosition, newValue, setError);
-    };
+    const [inputMinValue, setInputMinValue] = useState(min);
+    const [inputMaxValue, setInputMaxValue] = useState(max);
 
     useEffect(() => {
         const minSelector = document.getElementById(LITERALS.minSelector) as HTMLElement;
         const maxSelector = document.getElementById(LITERALS.maxSelector) as HTMLElement;
         const range = document.getElementById(LITERALS.range) as HTMLElement;
-
-        const rangeStartPosition = range.getBoundingClientRect().left;
         const rangeWidth = range.offsetWidth - maxSelector.offsetWidth;
-        const rangeEndPosition = rangeStartPosition + rangeWidth;
-        setRangeStartPosition(rangeStartPosition);
-        setRangeEndPosition(rangeEndPosition);
+        const rangeStartPosition = range.getBoundingClientRect().left;
 
-        selectorMoveHandler(
-            minSelector,
-            rangeStartPosition,
-            rangeEndPosition,
-            min,
-            max,
-            setInputMinValue,
-            setInputMaxValue
-        );
-        selectorMoveHandler(
-            maxSelector,
-            rangeStartPosition,
-            rangeEndPosition,
-            min,
-            max,
-            setInputMinValue,
-            setInputMaxValue
-        );
+        setState({ type: 'SET_MIN', payload: min });
+        setState({ type: 'SET_MAX', payload: max });
+        setState({ type: 'SET_RANGE_START_POSITION', payload: rangeStartPosition });
+        setState({ type: 'SET_RANGE_END_POSITION', payload: rangeStartPosition + rangeWidth });
+
+        selectorMoveHandler(minSelector, setInputMinValue);
+        selectorMoveHandler(maxSelector, setInputMaxValue);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const [error, setError] = useState('');
+
+    const handleChangeMinValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = Number(event.target.value);
+        setInputMinValue(newValue);
+        onChangeMinValueHandler(newValue, setError);
+    };
+
+    const handleChangeMaxValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = Number(event.target.value);
+        setInputMaxValue(newValue);
+        onChangeMaxValueHandler(newValue, setError);
+    };
 
     const isError = hasText(error);
 

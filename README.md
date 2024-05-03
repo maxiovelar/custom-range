@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Custom Range App
 
-## Getting Started
+This is a Front-End application to create a range component from scratch.
 
-First, run the development server:
+## Running the App
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+To run the app, use the following commands:
+
+1. Clone the .envExample file to .env.local
+2. Set the environment variables
+
+```
+NEXT_PUBLIC_API_BASE_URL=https://run.mocky.io/v3/
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. To run the app, execute the following commands:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## External mocked APIs
 
-## Learn More
+`https://run.mocky.io/v3/ca276e65-744d-4dc8-82a1-ee073aaf987b`
 
-To learn more about Next.js, take a look at the following resources:
+Returns:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+{
+    "data": {
+        "min": 1,
+        "max": 100
+    }
+}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+`https://run.mocky.io/v3/948df8dc-397c-4e6c-a7f6-f24f8b54fb7e`
 
-## Deploy on Vercel
+Returns:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+{
+    "data": {
+        "fixedValues": [
+            1.99,
+            5.99,
+            10.99,
+            30.99,
+            50.99,
+            70.99
+        ]
+    }
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Project Overview
+
+This project is a NextJS + TypeScript app. It uses ESLint for linting and Jest for testing. The app includes server and client components.
+It also contains SCSS modules for styling.
+
+### User Interface
+
+The app features a clean and intuitive user interface, developed to be used with dark and light themes. The range component is designed to be user-friendly and accessible, with a responsive layout that adapts from medium size and up screens.
+
+### Modern Technologies
+
+Built with modern technologies such as NextJS v14.2.3, and TypeScript, the app leverages the latest web development tools.
+
+### Potential for Improvement
+
+-   **Testing Coverage**: Extend the testing coverage to ensure robustness and reliability, potentially including tests to validate all the events and user interactions.
+
+-   **Fixed Values Range**: Implement a feature to allow the user to select a range of fixed values in the Exercise2 page.
+
+For more details, refer to the individual files in the codebase.

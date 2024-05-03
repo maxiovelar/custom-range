@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RangeNormal should render correctly 1`] = `
+<div>
+  <div
+    class="wrapper"
+  >
+    <div>
+      <input
+        aria-label="min-value"
+        class="value"
+        id="min-value"
+        max="100"
+        min="1"
+        type="number"
+        value="1"
+      />
+      <label
+        class="label"
+        for="min-value"
+      >
+        €
+      </label>
+    </div>
+    <div
+      class="container"
+    >
+      <div
+        class="range"
+        data-testid="range"
+        id="range"
+      >
+        <div
+          class="progress"
+          id="progress"
+        />
+      </div>
+      <button
+        aria-label="min-selector"
+        class="min"
+        draggable="true"
+        id="min-selector"
+        type="button"
+      />
+      <button
+        aria-label="max-selector"
+        class="max"
+        draggable="true"
+        id="max-selector"
+        type="button"
+      />
+    </div>
+    <div>
+      <input
+        aria-label="max-value"
+        class="value"
+        id="max-value"
+        max="100"
+        min="1"
+        type="number"
+        value="100"
+      />
+      <label
+        class="label"
+        for="max-value"
+      >
+        €
+      </label>
+    </div>
+  </div>
+</div>
+`;

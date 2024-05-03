@@ -57,6 +57,7 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
                 <input
                     type="number"
                     id={LITERALS.minValue}
+                    aria-label={LITERALS.minValue}
                     className={styles.value}
                     value={inputMinValue}
                     onChange={handleChangeMinValue}
@@ -68,12 +69,13 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
                 </label>
             </div>
             <div className={styles.container}>
-                <div id={LITERALS.range} className={styles.range}>
+                <div id={LITERALS.range} data-testid={LITERALS.range} className={styles.range}>
                     <div id={LITERALS.progress} className={styles.progress}></div>
                 </div>
                 <button
                     type="button"
                     id={LITERALS.minSelector}
+                    aria-label={LITERALS.minSelector}
                     draggable={!isError}
                     className={styles.min}
                     disabled={isError}
@@ -81,6 +83,7 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
                 <button
                     type="button"
                     id={LITERALS.maxSelector}
+                    aria-label={LITERALS.maxSelector}
                     draggable={!isError}
                     className={styles.max}
                     disabled={isError}
@@ -90,6 +93,7 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
                 <input
                     type="number"
                     id={LITERALS.maxValue}
+                    aria-label={LITERALS.maxValue}
                     className={styles.value}
                     value={inputMaxValue}
                     onChange={handleChangeMaxValue}

@@ -1,7 +1,7 @@
 import { InDevelopment } from '@/_common/components/svg/in-development/InDevelopment';
 import { pageTitles } from '@/_common/constants/constants';
 
-const PageExercise2 = async () => {
+const PageExercise2 = () => {
     return (
         <>
             <h1 className="title">{pageTitles.exercise2}</h1>

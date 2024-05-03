@@ -7,7 +7,7 @@ const ERRORS = {
 };
 
 interface MouseMoveProps {
-    event: MouseEvent, mousePosition: number, selector: HTMLElement, onInputChange: (newValue: number) => void
+    event: MouseEvent, mousePosition: number, selector: HTMLElement, onInputChange: (newValue: string) => void
 }
 
 const onMouseMove = ({ event, mousePosition, selector, onInputChange }: MouseMoveProps) => {
@@ -28,17 +28,17 @@ const onMouseMove = ({ event, mousePosition, selector, onInputChange }: MouseMov
 
 
         if (selector.id === LITERALS.minSelector) {
-            onInputChange(newValue);
+            onInputChange(`${newValue}`);
         }
 
         if (selector.id === LITERALS.maxSelector) {
-            onInputChange(newValue);
+            onInputChange(`${newValue}`);
         }
     }
 };
 
 
-export const selectorMoveHandler = (selector: HTMLElement, onInputChange: (newValue: number) => void) => {
+export const selectorMoveHandler = (selector: HTMLElement, onInputChange: (newValue: string) => void) => {
     selector.onmousedown = (event: MouseEvent) => {
         event.preventDefault();
 

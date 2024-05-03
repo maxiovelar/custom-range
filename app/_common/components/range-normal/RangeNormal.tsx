@@ -17,8 +17,8 @@ export interface RangeNormalProps {
 }
 
 export const RangeNormal = ({ min, max }: RangeNormalProps) => {
-    const [inputMinValue, setInputMinValue] = useState(min);
-    const [inputMaxValue, setInputMaxValue] = useState(max);
+    const [inputMinValue, setInputMinValue] = useState<string>(`${min}`);
+    const [inputMaxValue, setInputMaxValue] = useState<string>(`${max}`);
     const [error, setError] = useState('');
     const isError = hasText(error);
 
@@ -40,15 +40,15 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
     }, []);
 
     const handleChangeMinValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = Number(event.target.value);
+        const newValue = event.target.value;
         setInputMinValue(newValue);
-        onChangeMinValueHandler(newValue, setError);
+        onChangeMinValueHandler(Number(newValue), setError);
     };
 
     const handleChangeMaxValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = Number(event.target.value);
+        const newValue = event.target.value;
         setInputMaxValue(newValue);
-        onChangeMaxValueHandler(newValue, setError);
+        onChangeMaxValueHandler(Number(newValue), setError);
     };
 
     return (
@@ -58,7 +58,7 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
                     type="number"
                     id={LITERALS.minValue}
                     className={styles.value}
-                    defaultValue={inputMinValue}
+                    value={inputMinValue}
                     onChange={handleChangeMinValue}
                     min={min}
                     max={max}
@@ -91,7 +91,7 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
                     type="number"
                     id={LITERALS.maxValue}
                     className={styles.value}
-                    defaultValue={inputMaxValue}
+                    value={inputMaxValue}
                     onChange={handleChangeMaxValue}
                     min={min}
                     max={max}

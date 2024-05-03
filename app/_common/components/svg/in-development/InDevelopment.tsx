@@ -3,6 +3,7 @@ import React from 'react';
 export const InDevelopment = ({ ...props }: React.SVGProps<SVGSVGElement>) => {
     return (
         <svg
+            data-testid="in-development-svg"
             xmlns="http://www.w3.org/2000/svg"
             width="552.94084"
             height="367.92049"

@@ -11,3 +11,14 @@ export const getRangeNormalData = async () => {
     const { min, max } = data;
     return { min, max };
 }
+
+export const getFixedValuesRangeData = async () => {
+    const { data } = await http.get(paths.fixedValues);
+
+    if (!data) {
+        return [];
+    }
+
+    const { fixedValues } = data;
+    return fixedValues;
+}

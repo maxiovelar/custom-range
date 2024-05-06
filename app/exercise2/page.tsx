@@ -1,15 +1,19 @@
-import { InDevelopment } from '@/_common/components/svg/in-development/InDevelopment';
+import { RangeFixedValues } from '@/_common/components/range-fixed-values/RangeFixeValues';
 import { pageTitles } from '@/_common/constants/constants';
+import { getFixedValuesRangeData } from '@/_services/apiService';
 
-const PageExercise2 = () => {
+interface FixedValuesProps {
+    rangeValues: number[];
+}
+
+const PageExercise2 = async () => {
+    const { rangeValues } = (await getFixedValuesRangeData()) as FixedValuesProps;
+    console.log('RANGE VALUES: ', rangeValues);
+
     return (
         <>
             <h1 className="title">{pageTitles.exercise2}</h1>
-            <InDevelopment />
-            <section className="text-container">
-                <h2>COMING SOON...</h2>
-                <p>This feature is in development yet, stay tuned!</p>
-            </section>
+            <RangeFixedValues rangeValues={rangeValues} />
         </>
     );
 };

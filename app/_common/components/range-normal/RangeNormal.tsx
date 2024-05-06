@@ -7,7 +7,7 @@ import {
     onChangeMinValueHandler,
     hasText,
     selectorMoveHandler,
-} from '@/_infra/services/mouseEventService';
+} from '@/_services/rangeNormalService';
 import { LITERALS } from '@/_common/constants/constants';
 import { setState } from '@/store';
 

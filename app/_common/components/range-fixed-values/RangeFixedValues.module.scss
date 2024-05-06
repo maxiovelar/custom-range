@@ -10,11 +10,20 @@ $selector-height: 1.75rem;
     justify-content: center;
 }
 
+.value-container {
+    width: 6.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .value {
-    border-radius: 8px;
     font-size: 1.5rem;
-    border: none;
-    padding: 0.5rem 0.75rem;
+}
+
+.label {
+    font-size: 1.5rem;
+    margin-left: 0.5rem;
 }
 
 .container {
@@ -28,7 +37,6 @@ $selector-height: 1.75rem;
 
 .range {
     position: absolute;
-    background-color: gray;
     background-color: rgb(var(--background-start-rgb));
     display: flex;
     align-items: center;
@@ -75,21 +83,6 @@ $selector-height: 1.75rem;
 
 .max {
     right: 0;
-}
-
-.label {
-    font-size: 1.5rem;
-    margin-left: 0.5rem;
-}
-
-.error {
-    color: red;
-    font-size: 0.8rem;
-    margin-top: 0.25rem;
-    position: absolute;
-    top: 3.25rem;
-    left: 50%;
-    transform: translate(-50%);
 }
 
 @media (prefers-color-scheme: dark) {

@@ -1,6 +1,6 @@
 import { RangeNormal } from '@/_common/components/range-normal/RangeNormal';
 import { pageTitles } from '@/_common/constants/constants';
-import { getRangeNormalData } from '@/_infra/services/apiService';
+import { getRangeNormalData } from '@/_services/apiService';
 
 const PageExercise1 = async () => {
     const { min, max } = await getRangeNormalData();

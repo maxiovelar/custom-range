@@ -1,6 +1,6 @@
 import { httpClient as http } from "@/_infra/http/httpClient";
 import { paths } from "@/_common/constants/constants";
-import { getFixedValuesRangeData, getRangeNormalData } from "@/_infra/services/apiService";
+import { getFixedValuesRangeData, getRangeNormalData } from "@/_services/apiService";
 
 describe("getRangeNormalData", () => {
     it('should return the min and max values from the API response when data is truthy', async () => {

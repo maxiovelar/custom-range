@@ -19,6 +19,6 @@ export const getFixedValuesRangeData = async () => {
         return [];
     }
 
-    const { fixedValues } = data;
-    return fixedValues;
+    const { rangeValues } = data;
+    return { rangeValues };
 }

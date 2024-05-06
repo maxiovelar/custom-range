@@ -36,7 +36,7 @@ Returns:
 }
 ```
 
-`https://run.mocky.io/v3/948df8dc-397c-4e6c-a7f6-f24f8b54fb7e`
+`https://run.mocky.io/v3/15e130c5-a7bb-40ec-906a-c7f1d1962e39`
 
 Returns:
 

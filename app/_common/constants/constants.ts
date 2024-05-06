@@ -41,5 +41,10 @@ export const pageTitles: Record<PageUrl, string> = {
 
 export const paths: Record<RangeType, string> = {
     rangeNormal: "ca276e65-744d-4dc8-82a1-ee073aaf987b",
-    fixedValues: "948df8dc-397c-4e6c-a7f6-f24f8b54fb7e",
+    fixedValues: "15e130c5-a7bb-40ec-906a-c7f1d1962e39",
+}
+
+export const rangeFixedConstants = {
+    selectorWidth: 28,
+    rangeWidth: 512,
 }

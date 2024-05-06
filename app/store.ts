@@ -1,6 +1,7 @@
 export interface State {
     min: number;
     max: number;
+    rangeValues: number[];
     rangeStartPosition: number;
     rangeEndPosition: number;
 }
@@ -8,12 +9,14 @@ export interface State {
 export type Action =
     | { type: 'SET_MIN'; payload: number }
     | { type: 'SET_MAX'; payload: number }
+    | { type: 'SET_RANGE_VALUES'; payload: number[] }
     | { type: 'SET_RANGE_START_POSITION'; payload: number }
     | { type: 'SET_RANGE_END_POSITION'; payload: number };
 
 const initialState: State = {
     min: 0,
     max: 0,
+    rangeValues: [],
     rangeStartPosition: 0,
     rangeEndPosition: 0,
 };
@@ -24,6 +27,8 @@ const reducer = (state: State, action: Action) => {
             return { ...state, min: action.payload };
         case 'SET_MAX':
             return { ...state, max: action.payload };
+        case 'SET_RANGE_VALUES':
+            return { ...state, rangeValues: action.payload };
         case 'SET_RANGE_START_POSITION':
             return { ...state, rangeStartPosition: action.payload };
         case 'SET_RANGE_END_POSITION':

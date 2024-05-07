@@ -1,5 +1,5 @@
-import { RangeNormal } from '@/_common/components/range-normal/RangeNormal';
-import { pageTitles } from '@/_common/constants/constants';
+import { RangeNormal } from '@/_components/range-normal/RangeNormal';
+import { pageTitles } from '@/_constants/constants';
 import { getRangeNormalData } from '@/_services/apiService';
 
 const PageExercise1 = async () => {

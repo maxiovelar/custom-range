@@ -1,5 +1,5 @@
 import { httpClient as http } from "@/_infra/http/httpClient";
-import { paths } from "@/_common/constants/constants";
+import { paths } from "@/_constants/constants";
 
 export const getRangeNormalData = async () => {
     const { data } = await http.get(paths.rangeNormal);

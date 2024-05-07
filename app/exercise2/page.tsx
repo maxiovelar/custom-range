@@ -1,5 +1,5 @@
-import { RangeFixedValues } from '@/_common/components/range-fixed-values/RangeFixeValues';
-import { pageTitles } from '@/_common/constants/constants';
+import { RangeFixedValues } from '@/_components/range-fixed-values/RangeFixeValues';
+import { pageTitles } from '@/_constants/constants';
 import { getFixedValuesRangeData } from '@/_services/apiService';
 
 interface FixedValuesProps {
@@ -8,7 +8,6 @@ interface FixedValuesProps {
 
 const PageExercise2 = async () => {
     const { rangeValues } = (await getFixedValuesRangeData()) as FixedValuesProps;
-    console.log('RANGE VALUES: ', rangeValues);
 
     return (
         <>

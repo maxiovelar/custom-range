@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { Navbar } from '@/_common/components/navbar/Navbar';
-import { Footer } from '@/_common/components/footer/Footer';
+import { Navbar } from '@/_components/navbar/Navbar';
+import { Footer } from '@/_components/footer/Footer';
 import './globals.scss';
 import { Suspense } from 'react';
 

@@ -1,4 +1,4 @@
-import { ImageNotFound } from './_common/components/svg/not-found/ImageNotFound';
+import { ImageNotFound } from './_components/svg/not-found/ImageNotFound';
 export default function NotFound() {
     return (
         <>

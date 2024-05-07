@@ -48,3 +48,8 @@ export const rangeFixedConstants = {
     selectorWidth: 28,
     rangeWidth: 512,
 }
+
+export const ERRORS = {
+    rangeValue: (min: number, max: number) => `The values must be between ${min} and ${max}`,
+    crossedValue: 'Min value and max value cannot be crossed in range',
+};

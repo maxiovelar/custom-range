@@ -1,12 +1,6 @@
 import { isValidMovement, setProgressWidth } from "@/_business/common";
-import { LITERALS } from "@/_constants/constants";
+import { ERRORS, LITERALS } from "@/_constants/constants";
 import { getState } from "@/store";
-
-const ERRORS = {
-    rangeValue: (min: number, max: number) => `The values must be between ${min} and ${max}`,
-    crossedValue: 'Min value and max value cannot be crossed in range',
-};
-
 interface MouseMoveProps {
     event: MouseEvent, mousePosition: number, selector: HTMLElement, onInputChange: (newValue: string) => void
 }
@@ -110,7 +104,6 @@ export const onChangeMaxValueHandler = (newValue: number, setError: (error: stri
 
 const calculateNewPositionFromValue = (newInsertedValue: number) => {
     const { min, max, rangeStartPosition, rangeEndPosition } = getState();
-
     const valueVariationPercentage = (newInsertedValue * 100) / (max - min);
     const newPosition = ((rangeEndPosition - rangeStartPosition) * valueVariationPercentage) / 100;
     return Math.round(newPosition);

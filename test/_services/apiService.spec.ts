@@ -26,7 +26,7 @@ describe("getRangeNormalData", () => {
 describe('getFixedValuesRangeData', () => {
     it('should fetch fixed values range data successfully when API returns valid data', async () => {
         const mockData = {
-            fixedValues: [1.99, 5.99, 10.99, 30.99, 50.99, 70.99]
+            rangeValues: [1.99, 5.99, 10.99, 30.99, 50.99, 70.99]
         };
 
         http.get = jest.fn().mockResolvedValue({ data: mockData });
@@ -34,7 +34,7 @@ describe('getFixedValuesRangeData', () => {
         const result = await getFixedValuesRangeData();
 
         expect(http.get).toHaveBeenCalledWith(paths.fixedValues);
-        expect(result).toEqual(mockData.fixedValues);
+        expect(result).toEqual(mockData);
     });
 
     it('should returns an empty array when data is null', async () => {

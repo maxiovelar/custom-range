@@ -1,6 +1,6 @@
 # Custom Range App
 
-This is a Front-End application to create a range component from scratch.
+This is a Front-End application to create two range components from scratch.
 
 ## Running the App
 
@@ -43,7 +43,7 @@ Returns:
 ```
 {
     "data": {
-        "fixedValues": [
+        "rangeValues": [
             1.99,
             5.99,
             10.99,
@@ -62,7 +62,7 @@ It also contains SCSS modules for styling.
 
 ### User Interface
 
-The app features a clean and intuitive user interface, developed to be used with dark and light themes. The range component is designed to be user-friendly and accessible, with a responsive layout that adapts from medium size and up screens.
+The app features a clean and intuitive user interface, developed to be used with dark and light themes. The range components are designed to be user-friendly and accessible, with responsive layouts that adapt from medium-sized and up screens.
 
 ### Modern Technologies
 
@@ -71,7 +71,5 @@ Built with modern technologies such as NextJS v14.2.3, and TypeScript, the app l
 ### Potential for Improvement
 
 -   **Testing Coverage**: Extend the testing coverage to ensure robustness and reliability, potentially including tests to validate all the events and user interactions.
-
--   **Fixed Values Range**: Implement a feature to allow the user to select a range of fixed values in the Exercise2 page.
 
 For more details, refer to the individual files in the codebase.

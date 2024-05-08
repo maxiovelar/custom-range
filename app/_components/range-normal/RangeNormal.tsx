@@ -70,7 +70,7 @@ export const RangeNormal = ({ min, max }: RangeNormalProps) => {
             </div>
             <div className={styles.container}>
                 <div id={LITERALS.range} data-testid={LITERALS.range} className={styles.range}>
-                    <div id={LITERALS.progress} className={styles.progress}></div>
+                    <div id={LITERALS.progress} data-testid={LITERALS.progress} className={styles.progress}></div>
                 </div>
                 <button
                     type="button"

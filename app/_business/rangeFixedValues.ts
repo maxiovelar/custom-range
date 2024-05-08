@@ -1,6 +1,5 @@
 import { isValidMovement, setProgressWidth } from "@/_business/common";
 import { rangeFixedConstants } from "@/_constants/constants";
-import { type SelectorId } from "@/_types/types";
 import { getState } from "@/store";
 
 interface MouseMoveProps {
@@ -17,7 +16,7 @@ const onMouseMove = ({ event, mousePosition, selector, onChangeLabelValue }: Mou
     if (newSelectorPosition > (rangeEndPosition - rangeStartPosition)) newSelectorPosition = (rangeEndPosition - rangeStartPosition);
 
     if (isValidMovement(selector, newSelectorPosition, rangeStartPosition)) {
-        const { selectedValue, finalPosition } = calculateNewValueAndPosition(newSelectorPosition, rangeValues, selector.id as SelectorId);
+        const { selectedValue, finalPosition } = calculateNewValueAndPosition(newSelectorPosition, rangeValues);
 
         selector.style.left = `${finalPosition}px`;
         selector.style.cursor = 'grabbing';
@@ -54,7 +53,7 @@ export const selectorMoveHandler = (selector: HTMLElement, onChangeLabelValue: (
     };
 };
 
-const calculateNewValueAndPosition = (newPosition: number, rangeValues: number[], selectorId: SelectorId) => {
+const calculateNewValueAndPosition = (newPosition: number, rangeValues: number[]) => {
     const { selectorWidth, rangeWidth } = rangeFixedConstants;
     const stepWidth = (rangeWidth - selectorWidth) / (rangeValues.length - 1);
 

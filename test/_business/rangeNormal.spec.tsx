@@ -27,44 +27,13 @@ describe('RangeNormal component', () => {
             toJSON() {},
         };
 
-        const TestComponent = () => {
-            return (
-                <>
-                    <input
-                        type="number"
-                        aria-label="min-value"
-                        id="min-value"
-                        value={props.min}
-                        onChange={onMinInputChange}
-                        min={props.min}
-                        max={props.max}
-                    />
-                    <div id="range" data-testid="range">
-                        <div id="progress"> </div>
-                    </div>
-                    <input
-                        type="number"
-                        aria-label="max-value"
-                        id="max-value"
-                        value={props.max}
-                        onChange={onMaxInputChange}
-                        min={props.min}
-                        max={props.max}
-                    />
-
-                    <button type="button" aria-label="min-selector" id="min-selector"></button>
-                    <button type="button" aria-label="max-selector" id="max-selector"></button>
-                </>
-            );
-        };
-
         beforeEach(() => {
             props = {
                 min: 1,
                 max: 100,
             };
 
-            render(<TestComponent />);
+            render(<RangeNormal {...props} />);
             jest.spyOn(store, 'getState').mockImplementation(() => {
                 return { min: 1, max: 100, rangeValues: [], rangeStartPosition: 0, rangeEndPosition: 484 };
             });
